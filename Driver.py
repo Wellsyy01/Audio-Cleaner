@@ -8,21 +8,19 @@ import ArgumentHandler as AHandler
 options, arguments = getopt.getopt(sys.argv[1:], short_options, long_options)
 error_status, audio_location, config_location = AHandler.handle(options, arguments)
 
-if (error_status) {
-
+if error_status:
     logging.error('Error')
 
-}
 
 
-def handle(options, arguments) {
+def handle(options, arguments) :
 
     t_arguments = [None, None]
     error = 0
     if arguments.length == 2:
         t_arguments[0] = arguments[0]
         t_arguments[1] = arguments[1]
-    elif arguments.length != 2
+    elif arguments.length != 2:
         error = 1
         
     for opt in options:
@@ -39,4 +37,3 @@ def handle(options, arguments) {
 
     return error, t_arguments[0], t_arguments[1]
 
-}

@@ -1,17 +1,11 @@
 from scipy.io import wavfile
 
-def import_audio(filepath) {
+def import_audio(filepath):
 
-    if (filepath.endswith('.wav')) {
+    if (filepath.endswith('.wav')):
         samplerate, sampledata = wavfile.read('./prep_audio/working_audio.wav')
-    }
-    // TODO Alternate file inputs
-    else {
+    
+    else:
         return 0
-    }
-
-    // TODO Sanitise Inputs
 
     return samplerate, sampledata
-
-}
