@@ -38,7 +38,7 @@ def main():
     long_options = 'help';
 
     options, arguments = getopt.getopt(sys.argv[1:], short_options, long_options)
-    error_status, audio_location, config_location = handle(options, arguments)
+    error_status, audio_location, config_location = __handle(options, arguments)
 
     Errors.error_check(error_status, 0)
 
