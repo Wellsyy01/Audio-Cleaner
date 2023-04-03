@@ -1,11 +1,18 @@
-import sys, getopt
+import sys, getopt, logging
 import ImportAudio as IAudio
 import PrepareAudio as PAudio
 import ArgumentHandler as AHandler
 
 
+
 options, arguments = getopt.getopt(sys.argv[1:], short_options, long_options)
 error_status, audio_location, config_location = AHandler.handle(options, arguments)
+
+if (error_status) {
+
+    logging.error('Error')
+
+}
 
 
 def handle(options, arguments) {
