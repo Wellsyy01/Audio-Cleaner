@@ -1,19 +1,13 @@
 import sys, getopt, logging
 import ImportAudio as IAudio
 import PrepareAudio as PAudio
-import ArgumentHandler as AHandler
+import Errors
 
+def __handle(options, arguments):
 
-
-options, arguments = getopt.getopt(sys.argv[1:], short_options, long_options)
-error_status, audio_location, config_location = AHandler.handle(options, arguments)
-
-if error_status:
-    logging.error('Error')
-
-
-
-def handle(options, arguments) :
+    if (not arguments):
+        error = 1
+        return error, None, None
 
     t_arguments = [None, None]
     error = 0
@@ -25,7 +19,7 @@ def handle(options, arguments) :
         
     for opt in options:
         
-        if (opt == '-h'):
+        if opt in ('-h' , 'help'):
             print(       'To run program for a given input audio file and configuration, input:' +
                     '\n\n     python PLACEHOLDER.py <audio file> <configuration file>' +
                     '\n\n Acceptable audio file extensions include:' +
@@ -36,4 +30,18 @@ def handle(options, arguments) :
                 )
 
     return error, t_arguments[0], t_arguments[1]
+
+
+def main():
+
+    short_options = 'h';
+    long_options = 'help';
+
+    options, arguments = getopt.getopt(sys.argv[1:], short_options, long_options)
+    error_status, audio_location, config_location = handle(options, arguments)
+
+    Errors.error_check(error_status, 0)
+
+   
+main()
 
