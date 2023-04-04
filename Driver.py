@@ -2,6 +2,9 @@ import sys, getopt, logging
 import ImportAudio as IAudio
 import PrepareAudio as PAudio
 import Errors
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.fft import fft, fftfreq
 
 def __handle(options, arguments):
 
@@ -11,10 +14,10 @@ def __handle(options, arguments):
 
     t_arguments = [None, None]
     error = 0
-    if arguments.length == 2:
+    if len(arguments) == 2:
         t_arguments[0] = arguments[0]
         t_arguments[1] = arguments[1]
-    elif arguments.length != 2:
+    elif len(arguments) != 2:
         error = 1
         
     for opt in options:
@@ -42,6 +45,18 @@ def main():
 
     Errors.error_check(error_status, 0)
 
-   
+    error_status, sample_rate, sample_data = IAudio.import_audio(audio_location)
+
+    Errors.error_check(error_status, 2)
+
+    T = 1/800
+    x = np.linspace(0.0, sample_rate * T, sample_rate, endpoint = False)
+    y_freq = fft(sample_data)
+    x_freq = fftfreq(sample_rate, T)[:sample_rate//2]
+    plt.plot(x_freq, 2.0/sample_rate * np.abs(y_freq[0:sample_rate//2]))
+    plt.grid()
+    plt.show()
+
+    
 main()
 
