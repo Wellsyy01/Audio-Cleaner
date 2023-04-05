@@ -4,7 +4,8 @@ import PrepareAudio as PAudio
 import Errors
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.fft import rfft, rfftfreq
+from scipy.fft import rfft, rfftfreq, ifft
+from scipy.io.wavfile import write
 
 def __handle(options, arguments):
 
@@ -51,9 +52,7 @@ def main():
 
     filters = [
 
-        [[0,1000], 0.5] ,
-        [[750,2000], 0] ,
-        [[3000, 4500], 2]
+        [[0, 400], 0]
 
     ]
     
@@ -79,6 +78,10 @@ def main():
     plt.plot(x_freq, np.abs(y_freq))
     plt.grid()
     plt.show()
+
+    new_data = ifft(y_freq)
+    write("example.wav", sample_rate, new_data.astype(np.int16))
+
 
     
 main()
