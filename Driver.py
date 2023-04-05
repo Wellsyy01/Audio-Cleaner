@@ -1,10 +1,10 @@
-import sys, getopt, logging
+import sys, getopt, logging, math
 import ImportAudio as IAudio
 import PrepareAudio as PAudio
 import Errors
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.fft import fft, fftfreq
+from scipy.fft import rfft, rfftfreq
 
 def __handle(options, arguments):
 
@@ -49,11 +49,34 @@ def main():
 
     Errors.error_check(error_status, 2)
 
-    T = 1/800
+    filters = [
+
+        [[0,1000], 0.5] ,
+        [[750,2000], 0] ,
+        [[3000, 4500], 2]
+
+    ]
+    
+
+    N = len(sample_data)
+
+    T = 1/sample_rate
     x = np.linspace(0.0, sample_rate * T, sample_rate, endpoint = False)
-    y_freq = fft(sample_data)
-    x_freq = fftfreq(sample_rate, T)[:sample_rate//2]
-    plt.plot(x_freq, 2.0/sample_rate * np.abs(y_freq[0:sample_rate//2]))
+    y_freq = rfft(sample_data) 
+    x_freq = rfftfreq(N, T)
+
+    location = 0
+    count = 0
+
+    for x in range(len(x_freq)):
+
+        for bucket in filters:
+            if ((x_freq[x] >= bucket[0][0]) and (x_freq[x] < bucket[0][1])):
+                y_freq[x] = y_freq[x] * bucket[1]
+
+
+
+    plt.plot(x_freq, np.abs(y_freq))
     plt.grid()
     plt.show()
 
