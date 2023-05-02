@@ -11,6 +11,11 @@ def __handle_error(error_code, message = ''):
         case 2:
             logging.error(' Audio file is of an incorrect type. Audio formats supported: ' +
                           '\n     *.wav' + '\n')
+        case 3:
+            logging.error(' Error occured while parsing configuration file:' +
+                            '\n ' + message)
+        case 4:
+            logging.error(' No filters were found in the configuration file.')
             
     return 1
 

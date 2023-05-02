@@ -1,6 +1,7 @@
 import sys, getopt, logging, math
 import ImportAudio as IAudio
 import PrepareAudio as PAudio
+import BuildConfig as Cfg
 import Errors
 import matplotlib.pyplot as plt
 import numpy as np
@@ -50,12 +51,8 @@ def main():
 
     Errors.error_check(error_status, 2)
 
-    filters = [
+    filters = Cfg.import_config(config_location)
 
-        [[0, 400], 0]
-
-    ]
-    
 
     N = len(sample_data)
 
